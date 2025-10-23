@@ -65,16 +65,16 @@ const signIn = async (req, res) => {
             });
         }
 
-        const {username,password} = req.body
+        const { username, password } = req.body
 
-        const userExists = await userModel.findOne({username})
-        if(!userExists) res.status(400).json({success: false, msg: "username does not exists",})
-        
-       const isMatch =  await bcrypt.compare(password,userExists.password)
-       if(!isMatch) res.status(400).json({success: false, msg: "Username or Password is wrong",})
+        const userExists = await userModel.findOne({ username })
+        if (!userExists) res.status(400).json({ success: false, msg: "Username does not exists", })
+
+        const isMatch = await bcrypt.compare(password, userExists.password)
+        if (!isMatch) res.status(400).json({ success: false, msg: "Username or Password is wrong", })
         res.status(200).json({
-            success:true,
-            msg:`Welcome ${username}`
+            success: true,
+            msg: `Welcome ${username}`
         })
 
     } catch (err) {
